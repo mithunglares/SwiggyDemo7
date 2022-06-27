@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  creationTimestamp: null
+  name: carts
+spec:
+  gateways:
+  - public-gateway.istio-system
+  - mesh
+  hosts:
+  - carts.sockshop7-production.20.241.242.170.nip.io
+  - carts
+  http:
+  - route:
+    - destination:
+        host: carts-canary.sockshop7-production.svc.cluster.local
+    - destination:
+        host: carts-primary.sockshop7-production.svc.cluster.local
+      weight: 100
